@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="icon" href="https://via.placeholder.com/16" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+         body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand, .nav-link {
+            color: #ffffff !important;
+        }
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #343a40;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar .nav-link {
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+        .sidebar .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container login-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center bg-dark">
+                        <h2>Iniciar Sesión</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.as_p }}
+                            </div>
+                            <button type="submit" class="btn btn-dark btn-block">Iniciar Sesión</button>
+                        </form>
+                        {% if form.errors %}
+                            <div class="alert alert-danger mt-3" role="alert">
+                                Por favor, introduce un nombre de usuario y contraseña correctos. Ambos campos pueden ser sensibles a mayúsculas.
+                            </div>
+                        {% endif %}
+                        <div class="alert alert-info mt-3 user-info" role="alert">
+                            <table>
+                                <tr>
+                                    <th>Nota:</th>
+                                    <td>Usuario: <code>admin</code>, Contraseña: <code>adminpassword</code></td>
+                                </tr>
+                                <tr>
+                                    <th>Nota:</th>
+                                    <td>Usuario: <code>Nando</code>, Contraseña: <code>nando</code></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
