@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmar Solicitud</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand, .nav-link {
+            color: #ffffff !important;
+        }
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #343a40;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar .nav-link {
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+        .sidebar .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">BiciGestión</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <div class="sidebar">
+        <nav class="nav flex-column">
+            <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
+            <a class="nav-link" href="{% url 'solicitudes' %}">Solicitudes de Reparación</a>
+        </nav>
+    </div>
+
+    <div class="envio-body">
+        <form method="POST">{% csrf_token %}
+            <div class="asunto" style="display: flex; margin-left: 20rem;">
+                <label>Asunto</label>
+                <input type="text" name="asunto">
+            </div>
+            <div class="mensaje" style="display: flex; margin-left: 17rem;">
+                <label>Redacte email</label>
+                <textarea name="mensaje" id="" cols="30" rows="10"></textarea>
+            </div>
+
+            <button type="submit" style="display: flex; margin-left: 23rem;">Enviar</button>
+
+        </form>
+    </div>
+
+
+
+</body>
+</html>

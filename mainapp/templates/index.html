@@ -65,17 +65,17 @@
      
           
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'solicitudes' %}">Clientes</a>
+            <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'clientes' %}">Solicitudes de Reparacion</a>
+            <a class="nav-link" href="{% url 'solicitudes' %}">Solicitudes de Reparacion</a>
           </li>
 
         
           <li class="nav-item">
            
               <form method="post" action="{% url 'logout' %}">
-             
+                {% csrf_token %}
                 <button type="submit" class="btn btn-link nav-link" style="padding: 0; border: none; background: none;">Cerrar sesión</button>
               </form>
  
@@ -112,8 +112,8 @@
         </div>
       </div>
     <!-- Fin del Carrusel -->
-
   </div>
+
   <div class="text-center">
 
   <footer class="footer mt-5 p-4 text-center">

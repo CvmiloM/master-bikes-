@@ -6,16 +6,36 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Cliente, Solicitud
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Q
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
 
 def index(request):
     return render(request, 'index.html')
+
 def clientes(request):
+    busqueda = request.GET.get('q')
     clientes = Cliente.objects.all()
+        
+    if busqueda: 
+        clientes = Cliente.objects.filter(Q(nombre__icontains=busqueda))
+
     return render(request, 'clientes.html', {'clientes': clientes})
 
 
 def solicitudes(request):
     solicitudes = Solicitud.objects.all()
+
+    busqueda = request.GET.get('q')
+
+    if busqueda:
+        solicitudes = Solicitud.objects.filter(
+            Q(cliente__nombre__icontains=busqueda) |
+            Q(descripcion__icontains=busqueda)
+        )
+
     return render(request, 'solicitudes.html', {'solicitudes': solicitudes})
 
 def detalle_solicitud(request, solicitud_id):
@@ -31,11 +51,20 @@ def detalle_solicitud(request, solicitud_id):
             else:
                 asunto = 'Rechazo de reparación'
                 mensaje = f'Hola {solicitud.cliente.nombre},\n\nLamentamos informarte que tu bicicleta no puede ser reparada.'
-            send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [solicitud.cliente.email], fail_silently=False)
+            send_mail(asunto, mensaje, settings.E , [solicitud.cliente.email], fail_silently=False)
             return redirect('solicitudes')
     else:
         form = ConfirmarSolicitudForm(instance=solicitud)
     return render(request, 'detalle_solicitud.html', {'solicitud': solicitud, 'form': form})
+
+def enviar_correo(request):
+    if request.method == 'POST':
+        asunto = request.POST.get('asunto')
+        mensaje = request.POST.get('mensaje')
+        send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, ['tomas.leon.cisternas@gmail.com'], fail_silently=False)
+        return redirect('solicitudes')
+    return render(request, 'mail.html')
+
 
 # Definición de otras vistas aquí
 
@@ -76,30 +105,17 @@ def send_email(email):
         'Confirmación de reparación'
     )
 
-
-# Elimina o agrega la definición de enviar_correo si es necesario
-
-# mainapp/views.py
-
-from django.shortcuts import render
-
 def historial(request):
     return render(request, 'historial.html')
-
-
-
-from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
     redirect_authenticated_user = True
+    def get_success_url(self):
+        return reverse_lazy('index')
 
 class CustomLogoutView(LogoutView):
-    next_page = reverse_lazy('index')
-
-
-from django.contrib.auth.decorators import user_passes_test
+    next_page = reverse_lazy('login')
 
 def admin_required(view_func):
     decorated_view = user_passes_test(
@@ -107,3 +123,4 @@ def admin_required(view_func):
         login_url='/login/'
     )(view_func)
     return decorated_view
+

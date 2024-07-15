@@ -5,8 +5,10 @@ from django.urls import path
 from . import views
 
 from mainapp.views import (
-    index, CustomLoginView, CustomLogoutView
+    CustomLoginView, CustomLogoutView, enviar_correo
 )
+
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('clientes/', views.clientes, name='clientes'),
@@ -17,4 +19,5 @@ urlpatterns = [
     path('historial/', views.historial, name='historial'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('mail/', enviar_correo, name='enviar_correo'),
 ]
