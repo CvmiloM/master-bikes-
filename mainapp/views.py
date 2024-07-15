@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.contrib.auth.models import User
+from .models import RegistroEmail
 
 def index(request):
     return render(request, 'index.html')
@@ -62,6 +64,10 @@ def enviar_correo(request):
         asunto = request.POST.get('asunto')
         mensaje = request.POST.get('mensaje')
         send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, ['tomas.leon.cisternas@gmail.com'], fail_silently=False)
+        RegistroEmail.objects.create(
+            asunto = asunto,
+            contenido = mensaje
+        )
         return redirect('solicitudes')
     return render(request, 'mail.html')
 
@@ -124,3 +130,6 @@ def admin_required(view_func):
     )(view_func)
     return decorated_view
 
+def listar_registros_correo(request):
+    registros = RegistroEmail.objects.all()
+    return render(request, 'listar_registros_correo.html', {'registros': registros})

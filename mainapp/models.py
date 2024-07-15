@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -76,3 +77,12 @@ class UsuarioAdmin(AbstractUser):
         help_text='Specific permissions for this user.',
         related_query_name='usuarioadmin'
     )
+
+class RegistroEmail(models.Model):
+    fecha_envio = models.DateTimeField(auto_now_add=True)
+    asunto = models.CharField(max_length=255)
+    contenido = models.TextField()
+
+    def __str__(self):
+        return f"Correo a {self.cliente.email} - {self.asunto} - {self.fecha_envio}"
+    

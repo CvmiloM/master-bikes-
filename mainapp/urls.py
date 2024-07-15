@@ -20,4 +20,5 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('mail/', enviar_correo, name='enviar_correo'),
+    path('registros_correo/', views.listar_registros_correo, name='listar_registros_correo'),
 ]
