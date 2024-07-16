@@ -65,6 +65,19 @@
             background-color: #5a6268;
             border-color: #545b62;
         }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            box-shadow: none;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -82,24 +95,23 @@
         </nav>
     </div>
 
-    <div class="envio-body">
-        <form method="POST">{% csrf_token %}
-            
-            <div class="asunto" style="display: flex; margin-left: 20rem;">
-                <label>Asunto</label>
-                <input type="text" name="asunto">
-            </div>
-            <div class="mensaje" style="display: flex; margin-left: 17rem;">
-                <label>Redacte email</label>
-                <textarea name="mensaje" id="" cols="30" rows="10"></textarea>
-            </div>
-
-            <button type="submit" style="display: flex; margin-left: 23rem;">Enviar</button>
-
-        </form>
+    <div class="content">
+        <h1>Confirmar Solicitud</h1>
+        <div class="card">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="asunto">Asunto</label>
+                    <input type="text" class="form-control" id="asunto" name="asunto">
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Redacte email</label>
+                    <textarea class="form-control" id="mensaje" name="mensaje" cols="30" rows="10"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Enviar</button>
+                <button type="button" class="btn btn-secondary" onclick="history.back()">Volver</button>
+            </form>
+        </div>
     </div>
-
-
-
 </body>
 </html>
